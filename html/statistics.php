@@ -93,10 +93,19 @@
                                 <script>
                                 document.addEventListener("DOMContentLoaded", () => {
                                     new ApexCharts(document.querySelector("#lineChart"), {
-                                        series: [{
+                                        series: [
+                                        <?php
+                                            $nameAndScore = Utils::executeAnything('');
+                                        ?>
+                                        {
                                             name: "Score",
                                             data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
-                                        }],
+                                        },
+                                        {
+                                            name: "Score",
+                                            data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+                                        },
+                                        ],
                                         chart: {
                                             height: 350,
                                             type: 'line',
@@ -119,9 +128,16 @@
                                             },
                                         },
                                         xaxis: {
-                                            categories: ['Animal 1', 'Animal 2', 'Animal 3', 'Animal 4',
-                                                'Animal 5', 'Animal 6', 'Animal 7', 'Animal 8',
-                                                'Animal 9'
+                                            categories: [
+                                                <?php
+                                                    $animalCount = Utils::executeAnything('select animalCount from parcour where parcourId = ?', $_SESSION['parcour']['parcourId']);
+                                                    for ($i = 1; $i <= $animalCount; $i++) {
+                                                        echo "\'Animal " . $i . "\'";
+                                                        if ($i < $animalCount) {
+                                                            echo ", ";
+                                                        }
+                                                    }
+                                                ?>
                                             ],
                                         }
                                     }).render();
